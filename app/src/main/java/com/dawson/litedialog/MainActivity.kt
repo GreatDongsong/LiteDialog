@@ -3,6 +3,8 @@ package com.dawson.litedialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
+import android.view.View
+import com.libratone.v3.widget.dialog.OnDismissListener
 import com.libratone.v3.widget.dialog.SmartDialog
 import com.libratone.v3.widget.dialog.ViewHolder
 
@@ -13,13 +15,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-    fun showDialog() {
-        val view = LayoutInflater.from(this).inflate(R.layout.layout_dialog, null)
+    fun showDialog(view: View) {
 
         var dialogBuilder = SmartDialog.newDialog(this)
+        var mAlertDialog: SmartDialog? = null
+        val view = LayoutInflater.from(this).inflate(R.layout.alert_dialog_icon_yes_no, null)
+
+        dialogBuilder = SmartDialog.newDialog(this)
         dialogBuilder.setContentHolder(ViewHolder(view))
-        var window: SmartDialog?
-        window = dialogBuilder.create()
-        window.show()
+        dialogBuilder.setOnDismissListener(object : OnDismissListener {
+            override fun onDismiss(dialog: SmartDialog) {
+            }
+        })
+        dialogBuilder.setCancelable(true)
+        mAlertDialog = dialogBuilder.create()
+        mAlertDialog.show()
     }
 }
